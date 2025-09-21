@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educloud Platform with Gaming Feature</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Sans+Odia:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="app.js"></script>
+
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span data-key="brand">Educloud</span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <ul>
+                    <li class="nav-item"><a href="#home" data-key="nav.home">Home</a></li>
+                    <li class="nav-item"><a href="#courses" data-key="nav.courses">Courses</a></li>
+                    <li class="nav-item"><a href="#features" data-key="nav.features">Features</a></li>
+                    <li class="nav-item"><a href="#testimonials" data-key="nav.testimonials">Success Stories</a></li>
+                    <li class="nav-item"><a href="#contact" data-key="nav.contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <!-- Language Selector -->
+                <div class="language-selector">
+                    <button class="language-toggle" onclick="toggleLanguageDropdown()">
+                        <span>
+                            <span id="current-flag">🇬🇧</span>
+                            <span id="current-language">English</span>
+                        </span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="language-dropdown">
+                        <div class="language-option active" data-lang="en" onclick="changeLanguage('en')">
+                            <span class="language-flag">🇬🇧</span>
+                            <span class="language-name">English</span>
+                            <span class="language-code">EN</span>
+                        </div>
+                        <div class="language-option" data-lang="hi" onclick="changeLanguage('hi')">
+                            <span class="language-flag">🇮🇳</span>
+                            <span class="language-name">हिन्दी</span>
+                            <span class="language-code">HI</span>
+                        </div>
+                        <div class="language-option" data-lang="bn" onclick="changeLanguage('bn')">
+                            <span class="language-flag">🇮🇳</span>
+                            <span class="language-name">বাংলা</span>
+                            <span class="language-code">BN</span>
+                        </div>
+                        <div class="language-option" data-lang="ta" onclick="changeLanguage('ta')">
+                            <span class="language-flag">🇮🇳</span>
+                            <span class="language-name">தமிழ்</span>
+                            <span class="language-code">TA</span>
+                        </div>
+                        <div class="language-option" data-lang="te" onclick="changeLanguage('te')">
+                            <span class="language-flag">🇮🇳</span>
+                            <span class="language-name">తెలుగు</span>
+                            <span class="language-code">TE</span>
+                        </div>
+                        <div class="language-option" data-lang="or" onclick="changeLanguage('or')">
+                            <span class="language-flag">🇮🇳</span>
+                            <span class="language-name">ଓଡ଼ିଆ</span>
+                            <span class="language-code">OR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher Profile Dropdown (hidden initially) -->
+                <div class="teacher-profile-dropdown" id="teacherProfileDropdown" style="display: none;">
+                    <button class="btn btn-teacher-profile" onclick="toggleTeacherProfileDropdown()">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span id="teacherName">Teacher</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="profile-dropdown-content" id="teacherProfileDropdownContent">
+                        <div class="profile-header">
+                            <div class="profile-avatar teacher-profile-avatar">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="profile-name" id="teacherProfileName">Dr. Smith</div>
+                            <div class="profile-subject" id="teacherProfileSubject">Mathematics</div>
+                        </div>
+                        <button class="profile-menu-item" onclick="openTeacherPortal()">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Teacher Dashboard</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="openLiveClasses()">
+                            <i class="fas fa-video"></i>
+                            <span>Live Classes</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="openStudyMaterials()">
+                            <i class="fas fa-book"></i>
+                            <span>Study Materials</span>
+                        </button>
+                        <hr>
+                        <button class="profile-menu-item" onclick="logoutTeacher()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Student Profile Dropdown (hidden initially) -->
+                <div class="student-profile-dropdown" id="studentProfileDropdown" style="display: none;">
+                    <button class="btn btn-student" onclick="toggleProfileDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="studentName">Student</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="profile-dropdown-content" id="profileDropdownContent">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="profile-name" id="profileName">Aarav Singh</div>
+                            <div class="profile-class" id="profileClass">Class 10 - Science</div>
+                        </div>
+                        <button class="profile-menu-item" onclick="openStudentProfile()">
+                            <i class="fas fa-user-edit"></i>
+                            <span data-key="profile.editProfile">Edit Profile</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="showProfileSection('progress')">
+                            <i class="fas fa-chart-line"></i>
+                            <span data-key="profile.myProgress">My Progress</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="showProfileSection('assignments')">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span data-key="profile.assignments">Assignments</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="showProfileSection('certificates')">
+                            <i class="fas fa-certificate"></i>
+                            <span data-key="profile.certificates">Certificates</span>
+                        </button>
+                        <button class="profile-menu-item" onclick="showProfileSection('settings')">
+                            <i class="fas fa-cog"></i>
+                            <span data-key="profile.settings">Settings</span>
+                        </button>
+                        <hr>
+                        <button class="profile-menu-item" onclick="logoutStudent()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span data-key="profile.logout">Logout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Auth buttons (shown when not logged in) -->
+                <div id="authButtons">
+                    <a href="#" class="btn btn-secondary" onclick="openModal('loginModal')">
+                        <i class="fas fa-sign-in-alt"></i> <span data-key="auth.login">Login</span>
+                    </a>
+                    <a href="#" class="btn btn-primary" onclick="openModal('signupModal')">
+                        <i class="fas fa-user-plus"></i> <span data-key="auth.signup">Sign Up</span>
+                    </a>
+                    <a href="#" class="btn btn-teacher" onclick="openModal('teacherSignupModal')">
+                        <i class="fas fa-chalkboard-teacher"></i> <span data-key="auth.teacherSignup">Teacher Signup</span>
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="openModal('teacherLoginModal')">
+                        <i class="fas fa-user-tie"></i> Teacher Login
+                    </a>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Image Slider -->
+    <section class="image-slider">
+        <div class="slider-container">
+            <div class="slider-track" id="sliderTrack">
+                <!-- Slide 1: Online Learning -->
+                <div class="slide" style="background: linear-gradient(45deg, #667eea, #764ba2);">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <i class="fas fa-laptop slide-icon"></i>
+                            <h2 data-key="slider.slide1.title">Learn Anywhere, Anytime</h2>
+                            <p data-key="slider.slide1.description">Access world-class education from the comfort of your home with our interactive online platform</p>
+                            <a href="#courses" class="btn btn-primary btn-hero">
+                                <i class="fas fa-play"></i> <span data-key="slider.slide1.button">Start Learning</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Expert Teachers -->
+                <div class="slide" style="background: linear-gradient(45deg, #ff6b6b, #feca57);">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <i class="fas fa-chalkboard-teacher slide-icon"></i>
+                            <h2 data-key="slider.slide2.title">Learn from Expert Teachers</h2>
+                            <p data-key="slider.slide2.description">Get guidance from India's top educators with years of experience and proven track records</p>
+                            <a href="#features" class="btn btn-primary btn-hero">
+                                <i class="fas fa-users"></i> <span data-key="slider.slide2.button">Meet Our Faculty</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Interactive Learning -->
+                <div class="slide" style="background: linear-gradient(45deg, #48CAE4, #023E8A);">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <i class="fas fa-gamepad slide-icon"></i>
+                            <h2 data-key="slider.slide3.title">Gamified Learning Experience</h2>
+                            <p data-key="slider.slide3.description">Make learning fun with our interactive quizzes, leaderboards, and achievement system</p>
+                            <a href="#" class="btn btn-primary btn-hero" onclick="openModal('freeTrialModal')">
+                                <i class="fas fa-trophy"></i> <span data-key="slider.slide3.button">Try Free Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4: Comprehensive Courses -->
+                <div class="slide" style="background: linear-gradient(45deg, #F72585, #B5179E);">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <i class="fas fa-book-open slide-icon"></i>
+                            <h2 data-key="slider.slide4.title">Comprehensive Study Material</h2>
+                            <p data-key="slider.slide4.description">Access complete courses for Class 1-12, covering all subjects and competitive exams</p>
+                            <a href="#courses" class="btn btn-primary btn-hero">
+                                <i class="fas fa-search"></i> <span data-key="slider.slide4.button">Browse Courses</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 5: Success Stories -->
+                <div class="slide" style="background: linear-gradient(45deg, #06FFA5, #00CC88);">
+                    <div class="slide-overlay">
+                        <div class="slide-content">
+                            <i class="fas fa-medal slide-icon"></i>
+                            <h2 data-key="slider.slide5.title">Join 50,000+ Successful Students</h2>
+                            <p data-key="slider.slide5.description">Be part of our success story with students achieving top ranks in various competitive exams</p>
+                            <a href="#testimonials" class="btn btn-primary btn-hero">
+                                <i class="fas fa-star"></i> <span data-key="slider.slide5.button">Success Stories</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-nav slider-prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-nav slider-next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="slider-dots" id="sliderDots">
+                <span class="slider-dot active" onclick="goToSlide(0)"></span>
+                <span class="slider-dot" onclick="goToSlide(1)"></span>
+                <span class="slider-dot" onclick="goToSlide(2)"></span>
+                <span class="slider-dot" onclick="goToSlide(3)"></span>
+                <span class="slider-dot" onclick="goToSlide(4)"></span>
+            </div>
+
+            <div class="slider-progress" id="sliderProgress"></div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 data-key="hero.title">Class 1 to 12 & Board Exams</h1>
+            <p data-key="hero.subtitle">All subjects and streams (Arts, Commerce & Science)</p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn btn-primary btn-hero pulse-animation">
+                    <i class="fas fa-play"></i> <span data-key="hero.startButton">Start Learning</span>
+                </a>
+                <a href="#" class="btn btn-secondary btn-hero" onclick="openModal('freeTrialModal')">
+                    <i class="fas fa-gift"></i> <span data-key="hero.trialButton">Free Trial</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item" onclick="openQuizModal()">
+                <span class="stat-number" data-count="9500000">0</span>
+                <span class="stat-label"><h3 data-key="stats.quiz">DAILY QUIZ</h3></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="50000">0</span>
+                <span class="stat-label"><h3 data-key="stats.assignment">ASSIGNMENT</h3></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="25000">0</span>
+                <span class="stat-label"><h3 data-key="stats.leaderboard">LEADERBOARD</h3></span>
+            </div>
+            <div class="stat-item" onclick="openGamingModal()">
+                <span class="stat-number" data-count="500">0</span>
+                <span class="stat-label"><h3 data-key="stats.gaming">LEARN CH'S THROUGH GAMING</h3></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="quiz-modal">
+        <div class="quiz-content">
+            <div class="quiz-header">
+                <h2><i class="fas fa-brain"></i> Daily Quiz Challenge</h2>
+                <button class="btn btn-secondary" onclick="closeQuizModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="quiz-body">
+                <div class="quiz-filter">
+                    <button class="filter-quiz-btn active" onclick="filterQuizzes('all')">All Quizzes</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('1-5')">Class 1-5</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('6-10')">Class 6-10</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('11-12')">Class 11-12</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('Mathematics')">Mathematics</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('Science')">Science</button>
+                    <button class="filter-quiz-btn" onclick="filterQuizzes('English')">English</button>
+                </div>
+                
+                <div class="quiz-grid" id="quizGrid">
+                    <!-- Quizzes will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Taking Modal -->
+    <div id="quizTakingModal" class="quiz-taking-modal">
+        <div class="quiz-taking-content">
+            <div class="quiz-taking-header">
+                <h2 id="quizTakingTitle">Quiz in Progress</h2>
+                <div class="quiz-timer" id="quizTimer">10:00</div>
+            </div>
+            
+            <div class="quiz-taking-body">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-fill" id="quizProgressFill" style="width: 0%"></div>
+                </div>
+                
+                <div class="quiz-question-container">
+                    <div class="quiz-question-number" id="questionNumber">Question 1 of 10</div>
+                    <div class="quiz-question-text" id="questionText">What is the capital of France?</div>
+                    
+                    <div class="quiz-options" id="quizOptions">
+                        <!-- Options will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="btn btn-secondary" id="prevQuestionBtn" onclick="previousQuestion()" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="btn btn-primary" id="nextQuestionBtn" onclick="nextQuestion()" disabled>
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-success" id="submitQuizBtn" onclick="submitQuiz()" style="display: none;">
+                        <i class="fas fa-check"></i> Submit Quiz
+                    </button>
+                    <button class="btn btn-danger" onclick="exitQuiz()">
+                        <i class="fas fa-times"></i> Exit Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Result Modal -->
+    <div id="quizResultModal" class="quiz-result-modal">
+        <div class="quiz-result-content">
+            <div class="quiz-result-score excellent" id="quizResultScore">85%</div>
+            <div class="quiz-result-message" id="quizResultMessage">Excellent Performance!</div>
+            
+            <div class="quiz-result-details">
+                <div class="quiz-result-detail">
+                    <div class="quiz-result-detail-value" id="correctAnswersCount">8</div>
+                    <div class="quiz-result-detail-label">Correct</div>
+                </div>
+                <div class="quiz-result-detail">
+                    <div class="quiz-result-detail-value" id="incorrectAnswersCount">2</div>
+                    <div class="quiz-result-detail-label">Incorrect</div>
+                </div>
+                <div class="quiz-result-detail">
+                    <div class="quiz-result-detail-value" id="timeTaken">8:30</div>
+                    <div class="quiz-result-detail-label">Time Taken</div>
+                </div>
+                <div class="quiz-result-detail">
+                    <div class="quiz-result-detail-value" id="scorePercentage">85%</div>
+                    <div class="quiz-result-detail-label">Score</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="retakeQuiz()">
+                    <i class="fas fa-redo"></i> Retake Quiz
+                </button>
+                <button class="btn btn-secondary" onclick="closeQuizResult()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gaming Modal -->
+    <div id="gamingModal" class="gaming-modal">
+        <div class="gaming-content">
+            <div class="gaming-header">
+                <h2><i class="fas fa-gamepad"></i> Math Gaming Zone</h2>
+                <button class="btn btn-secondary" onclick="closeGamingModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="gaming-body">
+                <div class="game-stats">
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="playerLevel">1</div>
+                        <div class="game-stat-label">Level</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="playerScore">0</div>
+                        <div class="game-stat-label">Score</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="streakCounter">0</div>
+                        <div class="game-stat-label">Streak</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="correctAnswers">0</div>
+                        <div class="game-stat-label">Correct</div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="levelProgress" style="width: 0%"></div>
+                </div>
+                <p style="margin-bottom: 1rem; opacity: 0.8;">Level Progress</p>
+
+                <div class="game-area">
+                    <div class="question" id="mathQuestion">Click Start to Begin!</div>
+                    <input type="number" class="answer-input" id="answerInput" placeholder="Answer" disabled>
+                    <div class="game-buttons">
+                        <button class="btn-game" id="startBtn" onclick="startGame()">Start Game</button>
+                        <button class="btn-game" id="submitBtn" onclick="submitAnswer()" disabled>Submit</button>
+                        <button class="btn-game" id="skipBtn" onclick="skipQuestion()" disabled>Skip</button>
+                    </div>
+                    <div class="game-message" id="gameMessage"></div>
+                </div>
+                
+                <div id="levelUpEffect" class="level-up-animation" style="display: none;">
+                    LEVEL UP! 🎉
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="class-subjects" id="class-subjects">
+        <div class="section-header">
+            <h2 class="section-title" data-key="classSubjects.title">Choose Your Class & Subject</h2>
+            <p class="section-subtitle" data-key="classSubjects.subtitle">Select your class to explore subjects and chapters</p>
+        </div>
+        
+        <div class="class-subjects-container">
+            <!-- Class Selection -->
+            <div class="class-grid">
+                <h3 class="selection-title" data-key="classSubjects.selectClass">Select Class</h3>
+                <div class="class-options">
+                    <div class="class-card" onclick="showSubjects(1)">
+                        <div class="class-number">1</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 1</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(2)">
+                        <div class="class-number">2</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 2</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(3)">
+                        <div class="class-number">3</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 3</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(4)">
+                        <div class="class-number">4</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 4</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(5)">
+                        <div class="class-number">5</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 5</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(6)">
+                        <div class="class-number">6</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 6</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(7)">
+                        <div class="class-number">7</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 7</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(8)">
+                        <div class="class-number">8</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 8</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(9)">
+                        <div class="class-number">9</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 9</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(10)">
+                        <div class="class-number">10</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 10</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(11)">
+                        <div class="class-number">11</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 11</div>
+                    </div>
+                    <div class="class-card" onclick="showSubjects(12)">
+                        <div class="class-number">12</div>
+                        <div class="class-label" data-key="classSubjects.class">Class 12</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Selection -->
+            <div class="subjects-section" id="subjects-section" style="display: none;">
+                <h3 class="selection-title" data-key="classSubjects.selectSubject">Select Subject</h3>
+                <div class="subjects-grid" id="subjects-grid">
+                    <!-- Subjects will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Chapters Section -->
+            <div class="chapters-section" id="chapters-section" style="display: none;">
+                <h3 class="selection-title" data-key="classSubjects.chapters">Chapters</h3>
+                <div class="chapters-list" id="chapters-list">
+                    <!-- Chapters will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="section-header">
+            <h2 class="section-title" data-key="courses.title">Popular Courses</h2>
+            <p class="section-subtitle" data-key="courses.subtitle">Choose from our comprehensive range of courses designed for different competitive exams</p>
+        </div>
+        
+        <div class="courses-container">
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title" data-key="courses.math.title">Mathematics - Class 10</h3>
+                    <p class="course-description" data-key="courses.math.description">Complete mathematics course for CBSE Class 10 with interactive lessons and practice tests.</p>
+                    <div class="course-meta">
+                        <span class="course-price">₹99</span>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" onclick="openLiveClass('Mathematics', 10)">
+                        <i class="fas fa-play"></i> <span data-key="courses.startCourse">Start Course</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title" data-key="courses.physics.title">Physics - Class 12</h3>
+                    <p class="course-description" data-key="courses.physics.description">Advanced physics concepts with practical experiments.</p>
+                    <div class="course-meta">
+                        <span class="course-price">₹99</span>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" onclick="openLiveClass('Physics', 12)">
+                        <i class="fas fa-play"></i> <span data-key="courses.startCourse">Start Course</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title" data-key="courses.chemistry.title">Chemistry - Class 12</h3>
+                    <p class="course-description" data-key="courses.chemistry.description">Complete chemistry preparation for BOARD with organic, inorganic, and physical chemistry.</p>
+                    <div class="course-meta">
+                        <span class="course-price">₹99</span>
+                        <div class="course-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" onclick="openLiveClass('Chemistry', 12)">
+                        <i class="fas fa-play"></i> <span data-key="courses.startCourse">Start Course</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title" data-key="features.title">Why choose Educloud?</h2>
+            <p class="section-subtitle" data-key="features.subtitle">Experience the best online learning with our unique features</p>
+        </div>
+        
+        <div class="features-container">
+            <div class="feature-item" onclick="openLiveClasses()">
+                <div class="feature-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.liveClasses.title">Live Interactive Classes</h3>
+                <p class="feature-description" data-key="features.liveClasses.description">Join live classes with expert teachers and interact in real-time with doubt solving sessions.</p>
+            </div>
+            
+            <div class="feature-item" onclick="openStudyMaterials()">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.studyMaterial.title">Comprehensive Study Material</h3>
+                <p class="feature-description" data-key="features.studyMaterial.description">Get access to extensive notes, practice papers, and previous year questions.</p>
+            </div>
+            
+            <div class="feature-item" onclick="openProgressTracking()">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.progress.title">Progress Tracking</h3>
+                <p class="feature-description" data-key="features.progress.description">Monitor your learning progress with detailed analytics and performance reports.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.mobile.title">Mobile Learning</h3>
+                <p class="feature-description" data-key="features.mobile.description">Learn on-the-go with our mobile app, available on both iOS and Android.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.peer.title">Peer Learning</h3>
+                <p class="feature-description" data-key="features.peer.description">Connect with fellow students, discuss problems, and learn together.</p>
+            </div>
+            
+            <div class="feature-item" onclick="openFacultyModal()">
+                <div class="feature-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3 class="feature-title" data-key="features.faculty.title">Expert Faculty</h3>
+                <p class="feature-description" data-key="features.faculty.description">Learn from India's best teachers with years of experience and proven track records.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2 class="section-title" data-key="testimonials.title">Success Stories</h2>
+            <p class="section-subtitle" data-key="testimonials.subtitle">Hear from our successful students who achieved their dreams</p>
+        </div>
+        
+        <div class="testimonials-container">
+            <div class="testimonial-slider">
+                <div class="testimonial-track" id="testimonial-track">
+                    <div class="testimonial-item">
+                        <div class="testimonial-content" data-key="testimonials.rahul.quote">
+                            "Educloud helped me to achieve 98%. The teachers are amazing and the study material is comprehensive."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4 data-key="testimonials.rahul.name">Rahul Sharma</h4>
+                                <p data-key="testimonials.rahul.achievement">Physics class 12 - 98%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-item">
+                        <div class="testimonial-content" data-key="testimonials.priya.quote">
+                            "Thanks to Educloud, I scored 95% in Class 12 boards. The interactive classes made learning so much easier."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <h4 data-key="testimonials.priya.name">Priya Patel</h4>
+                                <p data-key="testimonials.priya.achievement">CBSE Class 12 - 95%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn active">1</button>
+                <button class="slider-btn">2</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 data-key="brand">Educloud</h3>
+                <p data-key="footer.description">India's most trusted online learning platform helping millions of students achieve their dreams.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 data-key="footer.popularCourses">Popular Courses</h3>
+                <ul>
+                    <li><a href="#" data-key="footer.maths">Maths</a></li>
+                    <li><a href="#" data-key="footer.physics">Physics</a></li>
+                    <li><a href="#" data-key="footer.cbse">Class 11 & 12 (CBSE)</a></li>
+                    <li><a href="#" data-key="footer.computerScience">Computer Science</a></li>
+                    <li><a href="#" data-key="footer.science">Science</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 data-key="footer.quickLinks">Quick Links</h3>
+                <ul>
+                    <li><a href="#" data-key="footer.aboutUs">About Us</a></li>
+                    <li><a href="#" data-key="footer.faculty">Faculty</a></li>
+                    <li><a href="#" data-key="footer.results">Results</a></li>
+                    <li><a href="#" data-key="footer.blog">Blog</a></li>
+                    <li><a href="#" data-key="footer.careers">Careers</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 data-key="footer.support">Support</h3>
+                <ul>
+                    <li><a href="#" data-key="footer.helpCenter">Help Center</a></li>
+                    <li><a href="#" data-key="footer.contactUs">Contact Us</a></li>
+                    <li><a href="#" data-key="footer.privacyPolicy">Privacy Policy</a></li>
+                    <li><a href="#" data-key="footer.terms">Terms & Conditions</a></li>
+                    <li><a href="#" data-key="footer.refund">Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p data-key="footer.copyright">&copy; 2025 Educloud. All rights reserved. | Made with ❤️ in India</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 data-key="modals.login.title">Login to Educloud</h2>
+            <form onsubmit="handleStudentLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail" data-key="modals.email">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" data-key="modals.password">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> <span data-key="auth.login">Login</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Teacher Login Modal -->
+    <div id="teacherLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('teacherLoginModal')">&times;</span>
+            <h2>Teacher Login</h2>
+            <form onsubmit="handleTeacherLogin(event)">
+                <div class="form-group">
+                    <label for="teacherLoginEmail">Email</label>
+                    <input type="email" id="teacherLoginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherLoginPassword">Password</label>
+                    <input type="password" id="teacherLoginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-teacher">
+                    <i class="fas fa-sign-in-alt"></i> Teacher Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 data-key="modals.signup.title">Join Educloud</h2>
+            <form onsubmit="handleStudentSignup(event)">
+                <div class="form-group">
+                    <label for="signupName" data-key="modals.fullName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail" data-key="modals.email">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupClass" data-key="modals.class">Class</label>
+                    <select id="signupClass" required>
+                        <option value="" data-key="modals.selectClass">Select Class</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11">Class 11</option>
+                        <option value="12">Class 12</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword" data-key="modals.password">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> <span data-key="auth.signup">Sign Up</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="freeTrialModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('freeTrialModal')">&times;</span>
+            <h2 data-key="modals.trial.title">Start Your Free Trial</h2>
+            <p data-key="modals.trial.description">Get access to all courses for 7 days absolutely free!</p>
+            <form>
+                <div class="form-group">
+                    <label for="trialName" data-key="modals.fullName">Full Name</label>
+                    <input type="text" id="trialName" required>
+                </div>
+                <div class="form-group">
+                    <label for="trialEmail" data-key="modals.email">Email</label>
+                    <input type="email" id="trialEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="trialPhone" data-key="modals.phone">Phone Number</label>
+                    <input type="tel" id="trialPhone" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-gift"></i> <span data-key="modals.trial.button">Start Free Trial</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Teacher Signup Modal -->
+    <div id="teacherSignupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('teacherSignupModal')">&times;</span>
+            <h2 data-key="modals.teacher.title">Teacher Registration</h2>
+            <form onsubmit="handleTeacherSignup(event)">
+                <div class="form-group">
+                    <label for="teacherName" data-key="modals.fullName">Full Name</label>
+                    <input type="text" id="teacherName" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherEmail" data-key="modals.email">Email</label>
+                    <input type="email" id="teacherEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherSubject" data-key="modals.subject">Subject Specialization</label>
+                    <select id="teacherSubject" required>
+                        <option value="" data-key="modals.selectSubject">Select Subject</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Social Science">Social Science</option>
+                        <option value="Computer Science">Computer Science</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="teacherExperience" data-key="modals.experience">Years of Experience</label>
+                    <input type="number" id="teacherExperience" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherQualification" data-key="modals.qualification">Highest Qualification</label>
+                    <input type="text" id="teacherQualification" data-key="modals.qualificationPlaceholder" placeholder="e.g., M.Sc. Physics, B.Tech Computer Science" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherPhone" data-key="modals.phone">Phone Number</label>
+                    <input type="tel" id="teacherPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacherPassword" data-key="modals.password">Password</label>
+                    <input type="password" id="teacherPassword" required>
+                </div>
+                <button type="submit" class="btn btn-teacher">
+                    <i class="fas fa-chalkboard-teacher"></i> <span data-key="modals.teacher.register">Register as Teacher</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Teacher Portal Modal -->
+    <div id="teacherPortalModal" class="teacher-portal-modal">
+        <div class="teacher-portal-content">
+            <div class="teacher-sidebar">
+                <div class="teacher-sidebar-header">
+                    <div class="teacher-sidebar-avatar">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="teacher-sidebar-name" id="sidebarTeacherName">Dr. Smith</div>
+                    <div class="teacher-sidebar-subject" id="sidebarTeacherSubject">Mathematics</div>
+                    <p style="margin-top: 1rem; opacity: 0.8;">Welcome to your Teaching Portal</p>
+                </div>
+                
+                <nav class="teacher-nav">
+                    <a href="#" class="teacher-nav-item active" onclick="showTeacherSection('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="teacher-nav-item" onclick="showTeacherSection('classes')">
+                        <i class="fas fa-video"></i>
+                        <span>Manage Classes</span>
+                    </a>
+                    <a href="#" class="teacher-nav-item" onclick="showTeacherSection('students')">
+                        <i class="fas fa-users"></i>
+                        <span>Student Performance</span>
+                    </a>
+                    <a href="#" class="teacher-nav-item" onclick="showTeacherSection('materials')">
+                        <i class="fas fa-book"></i>
+                        <span>Study Materials</span>
+                    </a>
+                    <a href="#" class="teacher-nav-item" onclick="showTeacherSection('assignments')">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Assignments</span>
+                    </a>
+                    <a href="#" class="teacher-nav-item" onclick="showTeacherSection('profile')">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Profile</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="teacher-main">
+                <button class="btn btn-secondary" style="position: absolute; top: 1rem; right: 1rem;" onclick="closeTeacherPortal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                
+                <!-- Dashboard Section -->
+                <div id="teacherDashboardSection" class="teacher-section active">
+                    <h2><i class="fas fa-tachometer-alt"></i> Teacher Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="totalStudents">156</div>
+                            <div class="stat-card-label">Total Students</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="totalClasses">24</div>
+                            <div class="stat-card-label">Classes Conducted</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="totalMaterials">45</div>
+                            <div class="stat-card-label">Study Materials</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="averageRating">4.8</div>
+                            <div class="stat-card-label">Average Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <h3>Recent Activity</h3>
+                        <div id="recentActivity">
+                            <p>📚 Added new study material: "Quadratic Equations - Advanced" (2 hours ago)</p>
+                            <p>🎥 Conducted live class: "Physics - Electromagnetic Induction" (1 day ago)</p>
+                            <p>📝 Created assignment: "Mathematics Practice Set 5" (2 days ago)</p>
+                            <p>👥 New student enrolled: Priya Sharma (3 days ago)</p>
+                            <p>⭐ Received 5-star rating from Rahul Kumar (4 days ago)</p>
+                        </div>
+                    </div>
+
+                    <div class="teacher-card">
+                        <h3>Upcoming Classes</h3>
+                        <div id="upcomingClassesDashboard">
+                            <div class="class-item-card">
+                                <div class="class-item-header">
+                                    <div class="class-item-title">Mathematics - Calculus</div>
+                                    <div class="class-status scheduled">Today 3:00 PM</div>
+                                </div>
+                                <p>Class 12 - Advanced Mathematics</p>
+                                <p>45 students enrolled</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manage Classes Section -->
+                <div id="teacherClassesSection" class="teacher-section">
+                    <h2><i class="fas fa-video"></i> Manage Classes</h2>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <button class="btn btn-primary" onclick="showCreateClassForm()">
+                            <i class="fas fa-plus"></i> Create New Class
+                        </button>
+                    </div>
+
+                    <div class="classes-grid" id="teacherClassesGrid">
+                        <!-- Classes will be populated dynamically -->
+                    </div>
+
+                    <!-- Create Class Form (Hidden initially) -->
+                    <div id="createClassForm" class="teacher-card" style="display: none;">
+                        <h3>Create New Class</h3>
+                        <form onsubmit="createNewClass(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="classTitle">Class Title</label>
+                                    <input type="text" id="classTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classSubject">Subject</label>
+                                    <select id="classSubject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="Biology">Biology</option>
+                                        <option value="English">English</option>
+                                        <option value="Hindi">Hindi</option>
+                                        <option value="Social Science">Social Science</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classGrade">Class/Grade</label>
+                                    <select id="classGrade" required>
+                                        <option value="">Select Class</option>
+                                        <option value="6">Class 6</option>
+                                        <option value="7">Class 7</option>
+                                        <option value="8">Class 8</option>
+                                        <option value="9">Class 9</option>
+                                        <option value="10">Class 10</option>
+                                        <option value="11">Class 11</option>
+                                        <option value="12">Class 12</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classDateTime">Date & Time</label>
+                                    <input type="datetime-local" id="classDateTime" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="classDescription">Description</label>
+                                <textarea id="classDescription" rows="3"></textarea>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Create Class
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="hideCreateClassForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Student Performance Section -->
+                <div id="teacherStudentsSection" class="teacher-section">
+                    <h2><i class="fas fa-users"></i> Student Performance</h2>
+                    
+                    <div class="teacher-card">
+                        <h3>Student Overview</h3>
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Class</th>
+                                    <th>Progress</th>
+                                    <th>Last Activity</th>
+                                    <th>Performance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Students will be populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Study Materials Section -->
+                <div id="teacherMaterialsSection" class="teacher-section">
+                    <h2><i class="fas fa-book"></i> Study Materials</h2>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <button class="btn btn-primary" onclick="showAddMaterialForm()">
+                            <i class="fas fa-plus"></i> Add New Material
+                        </button>
+                    </div>
+
+                    <div id="teacherMaterialsList">
+                        <!-- Materials will be populated dynamically -->
+                    </div>
+
+                    <!-- Add Material Form (Hidden initially) -->
+                    <div id="addMaterialForm" class="teacher-card" style="display: none;">
+                        <h3>Add Study Material</h3>
+                        <form onsubmit="addStudyMaterial(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="materialTitle">Material Title</label>
+                                    <input type="text" id="materialTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialType">Type</label>
+                                    <select id="materialType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="pdf">PDF Document</option>
+                                        <option value="video">Video Lecture</option>
+                                        <option value="quiz">Interactive Quiz</option>
+                                        <option value="assignment">Assignment</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialClass">Class</label>
+                                    <select id="materialClass" required>
+                                        <option value="">Select Class</option>
+                                        <option value="6">Class 6</option>
+                                        <option value="7">Class 7</option>
+                                        <option value="8">Class 8</option>
+                                        <option value="9">Class 9</option>
+                                        <option value="10">Class 10</option>
+                                        <option value="11">Class 11</option>
+                                        <option value="12">Class 12</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="materialSubject">Subject</label>
+                                    <select id="materialSubject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="Biology">Biology</option>
+                                        <option value="English">English</option>
+                                        <option value="Hindi">Hindi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="materialDescription">Description</label>
+                                <textarea id="materialDescription" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="materialFile">Upload File</label>
+                                <input type="file" id="materialFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4,.mp3">
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload"></i> Add Material
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="hideAddMaterialForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Assignments Section -->
+                <div id="teacherAssignmentsSection" class="teacher-section">
+                    <h2><i class="fas fa-clipboard-list"></i> Assignments</h2>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <button class="btn btn-primary" onclick="showCreateAssignmentForm()">
+                            <i class="fas fa-plus"></i> Create Assignment
+                        </button>
+                    </div>
+
+                    <div id="teacherAssignmentsList">
+                        <!-- Assignments will be populated dynamically -->
+                    </div>
+
+                    <!-- Create Assignment Form (Hidden initially) -->
+                    <div id="createAssignmentForm" class="teacher-card" style="display: none;">
+                        <h3>Create New Assignment</h3>
+                        <form onsubmit="createAssignment(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="assignmentTitle">Assignment Title</label>
+                                    <input type="text" id="assignmentTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="assignmentClass">Class</label>
+                                    <select id="assignmentClass" required>
+                                        <option value="">Select Class</option>
+                                        <option value="6">Class 6</option>
+                                        <option value="7">Class 7</option>
+                                        <option value="8">Class 8</option>
+                                        <option value="9">Class 9</option>
+                                        <option value="10">Class 10</option>
+                                        <option value="11">Class 11</option>
+                                        <option value="12">Class 12</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="assignmentSubject">Subject</label>
+                                    <select id="assignmentSubject" required>
+                                        <option value="">Select Subject</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                        <option value="Biology">Biology</option>
+                                        <option value="English">English</option>
+                                        <option value="Hindi">Hindi</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="assignmentDueDate">Due Date</label>
+                                    <input type="datetime-local" id="assignmentDueDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentDescription">Instructions</label>
+                                <textarea id="assignmentDescription" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentPoints">Total Points</label>
+                                <input type="number" id="assignmentPoints" min="1" max="100" value="100">
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Create Assignment
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="hideCreateAssignmentForm()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="teacherProfileSection" class="teacher-section">
+                    <h2><i class="fas fa-user-edit"></i> Teacher Profile</h2>
+                    
+                    <div class="teacher-card">
+                        <h3>Personal Information</h3>
+                        <form onsubmit="updateTeacherProfile(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="teacherProfileName">Full Name</label>
+                                    <input type="text" id="teacherProfileName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherProfileEmail">Email</label>
+                                    <input type="email" id="teacherProfileEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherProfilePhone">Phone</label>
+                                    <input type="tel" id="teacherProfilePhone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherProfileSubject">Subject</label>
+                                    <input type="text" id="teacherProfileSubject" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherProfileQualification">Qualifications</label>
+                                <textarea id="teacherProfileQualification" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherProfileExperience">Experience</label>
+                                <textarea id="teacherProfileExperience" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Profile
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Classes Modal -->
+    <div id="liveClassesModal" class="live-classes-modal">
+        <div class="live-classes-content">
+            <div class="live-classes-header">
+                <h2><i class="fas fa-video"></i> Live Interactive Classes</h2>
+                <button class="btn btn-secondary" onclick="closeLiveClasses()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="live-classes-body">
+                <div class="live-classes-filter">
+                    <button class="filter-class-btn active" onclick="filterLiveClasses('all')">All Classes</button>
+                    <button class="filter-class-btn" onclick="filterLiveClasses('1-5')">Class 1-5</button>
+                    <button class="filter-class-btn" onclick="filterLiveClasses('6-10')">Class 6-10</button>
+                    <button class="filter-class-btn" onclick="filterLiveClasses('11-12')">Class 11-12</button>
+                    <button class="filter-class-btn" onclick="filterLiveClasses('live')">Live Now</button>
+                    <button class="filter-class-btn" onclick="filterLiveClasses('upcoming')">Upcoming</button>
+                </div>
+                
+                <div class="live-classes-grid" id="liveClassesGrid">
+                    <!-- Live classes will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Materials Modal -->
+    <div id="studyMaterialsModal" class="study-materials-modal">
+        <div class="study-materials-content">
+            <div class="study-materials-header">
+                <h2><i class="fas fa-book-open"></i> Comprehensive Study Materials</h2>
+                <button class="btn btn-secondary" onclick="closeStudyMaterials()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="study-materials-body">
+                <div class="study-materials-filter">
+                    <button class="filter-study-btn active" onclick="filterStudyMaterials('all')">All Materials</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('1-5')">Class 1-5</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('6-10')">Class 6-10</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('11-12')">Class 11-12</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('video')">Video Lectures</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('pdf')">PDF Notes</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('quiz')">Practice Quizzes</button>
+                    <button class="filter-study-btn" onclick="filterStudyMaterials('test')">Mock Tests</button>
+                </div>
+                
+                <div class="study-materials-grid" id="studyMaterialsGrid">
+                    <!-- Study materials will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Modal -->
+    <div id="facultyModal" class="faculty-modal">
+        <div class="faculty-content">
+            <div class="faculty-header">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Expert Faculty Members</h2>
+                <button class="btn btn-secondary" onclick="closeFacultyModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="faculty-body">
+                <div class="faculty-filter">
+                    <button class="filter-subject-btn active" onclick="filterFaculty('all')">All Subjects</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('Mathematics')">Mathematics</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('Physics')">Physics</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('Chemistry')">Chemistry</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('Biology')">Biology</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('English')">English</button>
+                    <button class="filter-subject-btn" onclick="filterFaculty('Hindi')">Hindi</button>
+                </div>
+                
+                <div class="faculty-grid" id="facultyGrid">
+                    <!-- Faculty members will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Tracking Modal -->
+    <div id="progressModal" class="progress-modal">
+        <div class="progress-content">
+            <div class="progress-header">
+                <h2><i class="fas fa-chart-line"></i> Student Progress Tracking</h2>
+                <button class="btn btn-secondary" onclick="closeProgressTracking()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            
+            <div class="progress-body">
+                <div class="progress-summary">
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="overallProgress">85%</div>
+                        <div class="progress-stat-label">Overall Progress</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="completedChapters">24</div>
+                        <div class="progress-stat-label">Chapters Completed</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="totalHours">156</div>
+                        <div class="progress-stat-label">Study Hours</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="averageScore">92%</div>
+                        <div class="progress-stat-label">Average Score</div>
+                    </div>
+                </div>
+                
+                <div class="subject-progress-grid" id="subjectProgressGrid">
+                    <!-- Subject progress will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Classroom -->
+    <div id="liveClassroom" class="live-classroom">
+        <div class="classroom-header">
+            <div class="classroom-title">
+                <span class="live-indicator">LIVE</span>
+                <span id="classroomTitle">Mathematics - Class 10 - Quadratic Equations</span>
+            </div>
+            <div class="classroom-controls">
+                <button class="control-btn" id="micBtn" onclick="toggleMic()">
+                    <i class="fas fa-microphone"></i> Mic
+                </button>
+                <button class="control-btn" id="videoBtn" onclick="toggleVideo()">
+                    <i class="fas fa-video"></i> Video
+                </button>
+                <button class="control-btn" onclick="raiseHand()">
+                    <i class="fas fa-hand-paper"></i> Raise Hand
+                </button>
+                <button class="control-btn danger" onclick="leaveLiveClass()">
+                    <i class="fas fa-sign-out-alt"></i> Leave
+                </button>
+            </div>
+        </div>
+        
+        <div class="classroom-main">
+            <div class="video-area">
+                <div class="main-video" id="mainVideo">
+                    <i class="fas fa-chalkboard-teacher" style="font-size: 4rem; opacity: 0.3;"></i>
+                    <div style="text-align: center; margin-top: 1rem; opacity: 0.7;">
+                        Teacher's Screen
+                    </div>
+                </div>
+                <div class="video-overlay">
+                    <span id="viewerCount">245 students watching</span>
+                </div>
+            </div>
+            
+            <div class="chat-sidebar">
+                <div class="chat-header">Live Chat</div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">
+                        <div class="message-author">Teacher</div>
+                        <div class="message-text">Welcome to today's live class on Quadratic Equations!</div>
+                        <div class="message-time">2:30 PM</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="message-author">Aarav</div>
+                        <div class="message-text">Thank you sir! Ready to learn.</div>
+                        <div class="message-time">2:31 PM</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="message-author">Priya</div>
+                        <div class="message-text">Sir, can you explain the discriminant concept again?</div>
+                        <div class="message-time">2:45 PM</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" class="chat-input-field" placeholder="Type your message..." onkeypress="sendMessage(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Profile Modal (existing content maintained) -->
+    <div id="studentProfileModal" class="student-profile-modal">
+        <div class="profile-modal-content">
+            <div class="profile-sidebar">
+                <div class="profile-sidebar-header">
+                    <div class="profile-sidebar-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-sidebar-name" id="sidebarStudentName">Aarav Singh</div>
+                    <div class="profile-sidebar-class" id="sidebarStudentClass">Class 10 - Science</div>
+                    <div class="profile-sidebar-progress">
+                        <div class="progress-circle">
+                            <div class="progress-text" id="sidebarProgress">85%</div>
+                        </div>
+                        <p style="margin-top: 0.5rem; opacity: 0.8;">Overall Progress</p>
+                    </div>
+                </div>
+                
+                <nav class="profile-nav">
+                    <a href="#" class="profile-nav-item active" onclick="showProfileSection('profile')">
+                        <i class="fas fa-user"></i>
+                        <span data-key="profile.editProfile">Profile</span>
+                    </a>
+                    <a href="#" class="profile-nav-item" onclick="showProfileSection('progress')">
+                        <i class="fas fa-chart-line"></i>
+                        <span data-key="profile.myProgress">My Progress</span>
+                    </a>
+                    <a href="#" class="profile-nav-item" onclick="showProfileSection('assignments')">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span data-key="profile.assignments">Assignments</span>
+                    </a>
+                    <a href="#" class="profile-nav-item" onclick="showProfileSection('certificates')">
+                        <i class="fas fa-certificate"></i>
+                        <span data-key="profile.certificates">Certificates</span>
+                    </a>
+                    <a href="#" class="profile-nav-item" onclick="showProfileSection('settings')">
+                        <i class="fas fa-cog"></i>
+                        <span data-key="profile.settings">Settings</span>
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="profile-main">
+                <button class="btn btn-secondary" style="position: absolute; top: 1rem; right: 1rem;" onclick="closeStudentProfile()">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <!-- Profile Section -->
+                <div id="profileSection" class="profile-section active">
+                    <h2 data-key="profile.editProfile">Edit Profile</h2>
+                    
+                    <div class="profile-card">
+                        <h3 data-key="profile.personalInfo">Personal Information</h3>
+                        <form onsubmit="updateStudentProfile(event)">
+                            <div class="profile-info-grid">
+                                <div class="form-group">
+                                    <label for="profileName" data-key="profile.name">Name</label>
+                                    <input type="text" id="profileNameInput" value="Aarav Singh">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileEmail" data-key="profile.email">Email</label>
+                                    <input type="email" id="profileEmailInput" value="aarav@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePhone" data-key="profile.phone">Phone</label>
+                                    <input type="tel" id="profilePhoneInput" value="+91 9876543210">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileDOB" data-key="profile.dateOfBirth">Date of Birth</label>
+                                    <input type="date" id="profileDOBInput" value="2008-05-15">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileAddress" data-key="profile.address">Address</label>
+                                <textarea id="profileAddressInput" rows="3">123 Main Street, New Delhi, India - 110001</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> <span data-key="profile.save">Save Changes</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3 data-key="profile.academicInfo">Academic Information</h3>
+                        <div class="profile-info-grid">
+                            <div class="profile-info-item">
+                                <div class="profile-info-label" data-key="profile.class">Class</div>
+                                <div class="profile-info-value">Class 10</div>
+                            </div>
+                            <div class="profile-info-item">
+                                <div class="profile-info-label" data-key="profile.subjects">Subjects</div>
+                                <div class="profile-info-value">Mathematics, Science, English, Hindi, Social Science</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3 data-key="profile.parentInfo">Parent Information</h3>
+                        <form onsubmit="updateParentInfo(event)">
+                            <div class="profile-info-grid">
+                                <div class="form-group">
+                                    <label for="parentName" data-key="profile.parentName">Parent Name</label>
+                                    <input type="text" id="parentNameInput" value="Rajesh Singh">
+                                </div>
+                                <div class="form-group">
+                                    <label for="parentPhone" data-key="profile.parentPhone">Parent Phone</label>
+                                    <input type="tel" id="parentPhoneInput" value="+91 9876543211">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> <span data-key="profile.save">Save Changes</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div id="progressSection" class="profile-section">
+                    <h2 data-key="profile.myProgress">My Progress</h2>
+                    
+                    <div class="profile-card">
+                        <h3>Subject-wise Progress</h3>
+                        <div id="subjectProgress">
+                            <div class="progress-section">
+                                <div class="progress-label">Mathematics</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 92%"></div>
+                                </div>
+                                <div class="progress-text">92% Complete</div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="progress-label">Science</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 78%"></div>
+                                </div>
+                                <div class="progress-text">78% Complete</div>
+                            </div>
+                            <div class="progress-section">
+                                <div class="progress-label">English</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%"></div>
+                                </div>
+                                <div class="progress-text">85% Complete</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignments Section -->
+                <div id="assignmentsSection" class="profile-section">
+                    <h2 data-key="profile.assignments">Assignments</h2>
+                    
+                    <div class="assignments-grid">
+                        <div class="assignment-card">
+                            <h4>Mathematics - Quadratic Equations</h4>
+                            <p>Due: March 15, 2025</p>
+                            <span class="assignment-status completed">Completed</span>
+                            <p>Score: 95/100</p>
+                        </div>
+                        <div class="assignment-card">
+                            <h4>Science - Light and Reflection</h4>
+                            <p>Due: March 20, 2025</p>
+                            <span class="assignment-status pending">Pending</span>
+                        </div>
+                        <div class="assignment-card">
+                            <h4>English - Essay Writing</h4>
+                            <p>Due: March 10, 2025</p>
+                            <span class="assignment-status overdue">Overdue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificates Section -->
+                <div id="certificatesSection" class="profile-section">
+                    <h2 data-key="profile.certificates">Certificates</h2>
+                    
+                    <div class="certificates-grid">
+                        <div class="certificate-card">
+                            <div class="certificate-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <h4>Mathematics Excellence</h4>
+                            <p>Awarded for scoring 95% in Mathematics</p>
+                            <small>January 2025</small>
+                        </div>
+                        <div class="certificate-card">
+                            <div class="certificate-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>Science Quiz Winner</h4>
+                            <p>First place in National Science Quiz</p>
+                            <small>December 2024</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settingsSection" class="profile-section">
+                    <h2 data-key="profile.settings">Settings</h2>
+                    
+                    <div class="settings-group">
+                        <h3 data-key="profile.notifications">Notifications</h3>
+                        <div class="settings-item">
+                            <div>
+                                <strong>Email Notifications</strong>
+                                <p>Receive updates about assignments and announcements</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                        </div>
+                        <div class="settings-item">
+                            <div>
+                                <strong>SMS Notifications</strong>
+                                <p>Receive important updates via SMS</p>
+                            </div>
+                            <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3 data-key="profile.privacy">Privacy Settings</h3>
+                        <div class="settings-item">
+                            <div>
+                                <strong>Profile Visibility</strong>
+                                <p>Allow other students to see your profile</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3 data-key="profile.changePassword">Change Password</h3>
+                        <form onsubmit="changePassword(event)">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-key"></i> Update Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    </body>
+</html>
